@@ -1,87 +1,35 @@
-require('dotenv').config();
+// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+require('dotenv').config(); // Optional if you're using .env for DB URI
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-
-app.get('/', (req, res) => {
-  res.send('Hello from the backend!'); //h
-});
-
-const Patient = require('./models/Patient');
-
-
-app.post('/patients', async (req, res) => {
-  try {
-    const newPatient = new Patient(req.body);
-    const saved = await newPatient.save();
-    res.status(201).json(saved);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-app.get('/patients', async (req, res) => {
-  try {
-    const patients = await Patient.find();
-    res.status(200).json(patients);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/patients/:id', async (req, res) => {
-  try {
-    const patient = await Patient.findById(req.params.id);
-    if (!patient) return res.status(404).json({ error: 'Patient not found' });
-    res.json(patient);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.put('/patients/:id', async (req, res) => {
-  try {
-    const updated = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updated) return res.status(404).json({ error: 'Patient not found' });
-    res.json(updated);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-app.delete('/patients/:id', async (req, res) => {
-  try {
-    const deleted = await Patient.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ error: 'Patient not found' });
-    res.json({ message: 'Patient deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
-
-console.log('MONGO_URI:', process.env.MONGO_URI);
-
-mongoose.connect(process.env.MONGO_URI, {
+// MongoDB Connection
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/healthcare_dashboard';
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
-  .then(() => {
-    console.log('MongoDB connected');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err);
-  });
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch(err => console.error('❌ MongoDB connection error:', err));
+
+// Routes
+app.use('/api/patient-outcomes-dashboard', require('./routes/PatientOutcomes'));
+
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('Healthcare Dashboard Backend is running 🚀');
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🟢 Server listening on http://localhost:${PORT}`);
+});

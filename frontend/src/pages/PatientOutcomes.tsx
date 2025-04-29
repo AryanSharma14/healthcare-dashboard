@@ -1,85 +1,81 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
-const data = [
-  { month: 'Jan', recovery: 88 },
-  { month: 'Feb', recovery: 90 },
-  { month: 'Mar', recovery: 91 },
-  { month: 'Apr', recovery: 93 },
-  { month: 'May', recovery: 94 },
-  { month: 'Jun', recovery: 95 },
-];
-
-const readmissionCauses = [
-  { cause: "Infection", count: 30 },
-  { cause: "Surgical Complications", count: 20 },
-  { cause: "Medication Issues", count: 15 },
-  { cause: "Other", count: 10 },
-];
-
-const recentPatients = [
-  { name: "John Doe", status: "Recovered", admitted: "2025-03-01", discharged: "2025-03-10" },
-  { name: "Jane Smith", status: "In Treatment", admitted: "2025-03-15", discharged: "-" },
-  { name: "Robert Brown", status: "Critical", admitted: "2025-03-20", discharged: "-" },
-];
+type DashboardData = {
+  recoveryRate: number;
+  readmissionRate: number;
+  mortalityRate: number;
+  avgLengthOfStay: number;
+  summary: {
+    totalPatients: number;
+    improvedPercent: number;
+    criticalPercent: number;
+  };
+  recoveryOverTime: { month: string; rate: number }[];
+  readmissionCauses: { cause: string; count: number }[];
+  recentPatients: { name: string; status: string; admitted: string; discharged: string }[];
+  hospitalIncidents: { type: string; count: number }[];
+};
 
 export default function PatientOutcomes() {
+  const [data, setData] = useState<DashboardData | null>(null);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/patient-outcomes-dashboard")
+      .then(res => setData(res.data))
+      .catch(err => console.error("API fetch failed", err));
+  }, []);
+
+  if (!data) return <div className="p-6">Loading...</div>;
+
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Patient Outcomes Dashboard</h1>
 
-      {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-        {/* Recovery Rate Card */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-sm font-medium text-gray-500">Recovery Rate</h2>
-          <p className="mt-2 text-2xl font-bold text-green-600">92%</p>
+          <p className="mt-2 text-2xl font-bold text-green-600">{data.recoveryRate}%</p>
         </div>
 
-        {/* Readmission Rate Card */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-sm font-medium text-gray-500">Readmission Rate</h2>
-          <p className="mt-2 text-2xl font-bold text-red-500">8%</p>
+          <p className="mt-2 text-2xl font-bold text-red-500">{data.readmissionRate}%</p>
         </div>
 
-        {/* Mortality Rate Card */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-sm font-medium text-gray-500">Mortality Rate</h2>
-          <p className="mt-2 text-2xl font-bold text-red-600">2%</p>
+          <p className="mt-2 text-2xl font-bold text-red-600">{data.mortalityRate}%</p>
         </div>
 
-        {/* Average Length of Stay Card */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-sm font-medium text-gray-500">Avg. Length of Stay</h2>
-          <p className="mt-2 text-2xl font-bold text-blue-600">5 Days</p>
+          <p className="mt-2 text-2xl font-bold text-blue-600">{data.avgLengthOfStay} Days</p>
         </div>
 
-        {/* Patient Outcomes Summary */}
         <div className="bg-white shadow-md rounded-lg p-6 h-[400px] flex flex-col">
           <h2 className="text-xl font-semibold mb-4">Patient Outcomes Summary</h2>
           <div className="grid grid-cols-3 gap-6 text-center mt-6">
-            {/* Total Patients */}
             <div className="flex flex-col items-center">
               <p className="text-sm font-medium text-gray-500 mb-1">Total Patients</p>
-              <p className="text-3xl font-bold text-gray-800">320</p>
+              <p className="text-3xl font-bold text-gray-800">{data.summary.totalPatients}</p>
             </div>
-            {/* % Improved */}
             <div className="flex flex-col items-center">
               <p className="text-sm font-medium text-gray-500 mb-1">Improved Percent</p>
-              <p className="text-3xl font-bold text-green-600">85%</p>
+              <p className="text-3xl font-bold text-green-600">{data.summary.improvedPercent}%</p>
             </div>
-            {/* % Critical */}
             <div className="flex flex-col items-center">
               <p className="text-sm font-medium text-gray-500 mb-1">Critical Percent</p>
-              <p className="text-3xl font-bold text-red-500">5%</p>
+              <p className="text-3xl font-bold text-red-500">{data.summary.criticalPercent}%</p>
             </div>
           </div>
         </div>
 
-        {/* Recovery Rate Over Time */}
         <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Recovery Rate Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
+            <LineChart data={data.recoveryOverTime.map(d => ({ month: d.month, recovery: d.rate }))}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis domain={[80, 100]} />
@@ -89,11 +85,10 @@ export default function PatientOutcomes() {
           </ResponsiveContainer>
         </div>
 
-        {/* Causes of Readmission */}
         <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Causes of Readmission</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={readmissionCauses}>
+            <BarChart data={data.readmissionCauses}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="cause" />
               <YAxis />
@@ -103,7 +98,6 @@ export default function PatientOutcomes() {
           </ResponsiveContainer>
         </div>
 
-        {/* Recent Patients */}
         <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Recent Patients</h2>
           <div className="overflow-x-auto">
@@ -117,7 +111,7 @@ export default function PatientOutcomes() {
                 </tr>
               </thead>
               <tbody>
-                {recentPatients.map((patient, index) => (
+                {data.recentPatients.map((patient, index) => (
                   <tr key={index} className="border-b">
                     <td className="px-6 py-4">{patient.name}</td>
                     <td className="px-6 py-4">{patient.status}</td>
@@ -130,7 +124,31 @@ export default function PatientOutcomes() {
           </div>
         </div>
 
+        <div className="col-span-full bg-white shadow-md rounded-lg p-6 h-[500px]">
+          <h2 className="text-xl font-semibold mb-4">Hospital Incidents</h2>
+          <ResponsiveContainer width="100%" height={380}>
+            <BarChart
+              data={data.hospitalIncidents}
+              margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="type" 
+                interval={0} 
+                angle={-30} 
+                textAnchor="end" 
+                height={100} 
+              />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#6366F1" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+
       </div>
     </div>
   );
 }
+
