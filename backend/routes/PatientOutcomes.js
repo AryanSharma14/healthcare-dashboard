@@ -5,7 +5,7 @@ const PatientOutcome = require('../models/PatientOutcomes');
 
 router.get('/', async (req, res) => {
   try {
-    const data = await PatientOutcome.findOne(); // Adjust query as needed
+    const data = await PatientOutcome.findOne(); 
     if (!data) {
       return res.status(404).json({ message: "No dashboard data found" });
     }

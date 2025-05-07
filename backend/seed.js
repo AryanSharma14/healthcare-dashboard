@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const PatientOutcome = require('./models/PatientOutcomes');
 
-dotenv.config(); // Load MONGO_URI from .env
+dotenv.config(); 
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 10000, // Optional: gives clearer error if URI fails
+  serverSelectionTimeoutMS: 10000, 
 })
 .then(() => console.log('✅ Connected to MongoDB Atlas'))
 .catch(err => {
