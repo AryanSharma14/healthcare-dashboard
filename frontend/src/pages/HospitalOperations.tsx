@@ -46,26 +46,26 @@ export default function HospitalOperations() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Average Length of Stay */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Avg. Length of Stay</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Avg. Length of Stay</h2>
           <p className="mt-2 text-2xl font-bold text-blue-600">5.2 Days</p>
         </div>
 
         {/* Bed Occupancy Rate */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Bed Occupancy Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Bed Occupancy Rate</h2>
           <p className="mt-2 text-2xl font-bold text-green-600">82%</p>
         </div>
 
         {/* Total Admissions */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Total Admissions</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Total Admissions</h2>
           <p className="mt-2 text-2xl font-bold text-gray-800">1,250</p>
         </div>
 
         {/* Medication Errors */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Medication Errors</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Medication Errors</h2>
           <p className="mt-2 text-2xl font-bold text-red-500">12 Cases</p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function HospitalOperations() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Patient Wait Times */}
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Patient Wait Times</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={waitTimes}>
@@ -87,7 +87,7 @@ export default function HospitalOperations() {
         </div>
 
         {/* Asset Utilization */}
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Asset Utilization Rates</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={assetUtilization}>
@@ -104,7 +104,7 @@ export default function HospitalOperations() {
       {/* Additional Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Equipment Maintenance Graph */}
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Equipment Maintenance Overview</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={equipmentMaintenance}>
@@ -121,7 +121,7 @@ export default function HospitalOperations() {
         </div>
 
         {/* Medication Error Breakdown */}
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Medication Error Breakdown</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>

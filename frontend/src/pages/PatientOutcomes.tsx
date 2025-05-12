@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
+
 type DashboardData = {
   recoveryRate: number;
   readmissionRate: number;
@@ -34,27 +35,27 @@ export default function PatientOutcomes() {
       <h1 className="text-3xl font-bold mb-6">Patient Outcomes Dashboard</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Recovery Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Recovery Rate</h2>
           <p className="mt-2 text-2xl font-bold text-green-600">{data.recoveryRate}%</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Readmission Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Readmission Rate</h2>
           <p className="mt-2 text-2xl font-bold text-red-500">{data.readmissionRate}%</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Mortality Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Mortality Rate</h2>
           <p className="mt-2 text-2xl font-bold text-red-600">{data.mortalityRate}%</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Avg. Length of Stay</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Avg. Length of Stay</h2>
           <p className="mt-2 text-2xl font-bold text-blue-600">{data.avgLengthOfStay} Days</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px] flex flex-col">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px] flex flex-col">
           <h2 className="text-xl font-semibold mb-4">Patient Outcomes Summary</h2>
           <div className="grid grid-cols-3 gap-6 text-center mt-6">
             <div className="flex flex-col items-center">
@@ -72,7 +73,7 @@ export default function PatientOutcomes() {
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Recovery Rate Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data.recoveryOverTime.map(d => ({ month: d.month, recovery: d.rate }))}>
@@ -85,7 +86,7 @@ export default function PatientOutcomes() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Causes of Readmission</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data.readmissionCauses}>
@@ -98,7 +99,7 @@ export default function PatientOutcomes() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Recent Patients</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
@@ -124,7 +125,7 @@ export default function PatientOutcomes() {
           </div>
         </div>
 
-        <div className="col-span-full bg-white shadow-md rounded-lg p-6 h-[500px]">
+        <div className="col-span-full bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[500px]">
           <h2 className="text-xl font-semibold mb-4">Hospital Incidents</h2>
           <ResponsiveContainer width="100%" height={380}>
             <BarChart

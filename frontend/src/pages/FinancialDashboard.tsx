@@ -49,30 +49,30 @@ export default function HealthcareFinancialDashboard() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">AR Days</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">AR Days</h2>
           <p className="mt-2 text-2xl font-bold text-blue-600">38</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Claim Denial Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Claim Denial Rate</h2>
           <p className="mt-2 text-2xl font-bold text-red-500">12%</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Collection Rate</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Collection Rate</h2>
           <p className="mt-2 text-2xl font-bold text-green-600">91%</p>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-sm font-medium text-gray-500">Diversion Hours</h2>
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform">
+          <h2 className="text-base font-semibold text-gray-600">Diversion Hours</h2>
           <p className="mt-2 text-2xl font-bold text-gray-800">16</p>
         </div>
       </div>
 
       {/* Denial Reason Pie Chart & Collections Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Claim Denial Reasons</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -94,7 +94,7 @@ export default function HealthcareFinancialDashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 h-[400px]">
+        <div className="bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transition-transform h-[400px]">
           <h2 className="text-xl font-semibold mb-4">Monthly Collections</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={monthlyCollections}>

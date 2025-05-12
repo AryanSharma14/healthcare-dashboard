@@ -1,16 +1,15 @@
 {
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
+    "lucide-react": "^0.509.0",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
   },
   "scripts": {
-  "start": "concurrently \"npm run server\" \"npm run client\"",
-  "server": "cd backend && node server.js",
-  "client": "cd frontend && npm run dev"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && node server.js",
+    "client": "cd frontend && npm run dev"
+  }
 }
-
-}
-
