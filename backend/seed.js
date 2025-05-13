@@ -8,9 +8,9 @@ dotenv.config();
 mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 10000, 
 })
-.then(() => console.log('✅ Connected to MongoDB Atlas'))
+.then(() => console.log('Connected to MongoDB Atlas'))
 .catch(err => {
-  console.error('❌ MongoDB connection failed:', err);
+  console.error('MongoDB connection failed:', err);
   process.exit(1);
 });
 
@@ -57,11 +57,11 @@ const sampleData = new PatientOutcome({
 
 async function seed() {
   try {
-    await PatientOutcome.deleteMany(); // Clear existing data
-    await sampleData.save();           // Insert new data
-    console.log('✅ Sample data inserted successfully');
+    await PatientOutcome.deleteMany(); 
+    await sampleData.save();           
+    console.log('Sample data inserted successfully');
   } catch (err) {
-    console.error('❌ Error inserting sample data:', err);
+    console.error('Error inserting sample data:', err);
   } finally {
     mongoose.connection.close();
   }
